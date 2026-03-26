@@ -34,17 +34,12 @@ ports_description:
   5000/tcp: Unauthenticated Web interface (not required for Home Assistant Ingress)
   1984/tcp: go2rtc API
 host_network: false
-devices:
-  - /dev/hailo0
-  - /dev/hailo1
 tmpfs: true
 video: true
 full_access: true
 privileged:
   - PERFMON
   - SYS_RAWIO
-options:
-  plus_api_key: ""
 schema:
   plus_api_key: "password?"
   go2rtc_allow_arbitrary_exec: "str?"
@@ -55,5 +50,3 @@ map:
   - "addon_config:rw"
   - "homeassistant_config:rw"
   - "ssl"
-apparmor: false
-timeout: 600
