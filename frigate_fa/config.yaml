@@ -42,9 +42,7 @@ full_access: true
 privileged:
   - PERFMON
   - SYS_RAWIO
-schema:
-  plus_api_key: "password?"
-  go2rtc_allow_arbitrary_exec: "str?"
+schema: false
 services:
   - "mqtt:want"
 map:
