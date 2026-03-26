@@ -1,17 +1,12 @@
-name: Frigate (Full Access) — Hailo-10H
-version: 0.17.0-h10.1
-breaking_versions:
-  - 0.17.0
-  - 0.16.0
-  - 0.15.0
-  - 0.14.0
+name: "Frigate Hailo-10H (Full Access)"
+version: "0.17.0.1"
+slug: "frigate-fa-h10"
+description: "NVR with realtime local object detection using Hailo-10H AI accelerator"
+url: "https://github.com/mikehailodev/frigate-hass-addons-h10"
 arch:
   - aarch64
 panel_icon: "mdi:cctv"
 panel_title: Frigate
-slug: frigate-fa-h10
-description: "NVR with realtime local object detection using Hailo-10H AI accelerator"
-url: "https://github.com/mikehailodev/frigate-hass-addons-h10"
 startup: application
 boot: auto
 init: false
@@ -48,9 +43,11 @@ full_access: true
 privileged:
   - PERFMON
   - SYS_RAWIO
+options:
+  plus_api_key: ""
 schema:
-  plus_api_key: password?
-  go2rtc_allow_arbitrary_exec: str?
+  plus_api_key: "password?"
+  go2rtc_allow_arbitrary_exec: "str?"
 services:
   - "mqtt:want"
 map:
