@@ -5,6 +5,8 @@ breaking_versions:
   - 0.16.0
   - 0.15.0
   - 0.14.0
+arch:
+  - aarch64
 panel_icon: "mdi:cctv"
 panel_title: Frigate
 slug: frigate-fa-h10
@@ -51,8 +53,6 @@ schema:
   go2rtc_allow_arbitrary_exec: str?
 services:
   - "mqtt:want"
-arch:
-  - aarch64
 map:
   - "media:rw"
   - "addon_config:rw"
