@@ -1,0 +1,89 @@
+From: mikehailodev
+Subject: [PATCH] detectors: hailo8l: Add Hailo-10H support
+
+Add Hailo-10H architecture detection and default model configuration
+to the existing Hailo detector plugin. Since HailoRT 4.x (Hailo-8)
+and HailoRT 5.x (Hailo-10H) cannot coexist, this requires a separate
+Docker image variant with HailoRT 5.2.0.
+
+Changes to hailo8l.py:
+- detect_hailo_arch(): Recognize HAILO10H in hailortcli output
+- Add H10_DEFAULT_MODEL and H10_DEFAULT_URL constants
+- extract_model_name(): Return H10 default model when arch is hailo10h
+- check_and_prepare(): Download H10 default model when arch is hailo10h
+- Update HailoDetectorConfig docstring and title
+
+No changes to the detector key ("hailo8l") or user-facing config syntax.
+Users configure it identically:
+
+  detectors:
+    hailo:
+      type: hailo8l
+      device: PCIe
+
+The detector auto-detects whether the hardware is Hailo-8, Hailo-8L,
+or Hailo-10H and selects the appropriate default model.
+
+---
+ frigate/detectors/plugins/hailo8l.py | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/frigate/detectors/plugins/hailo8l.py b/frigate/detectors/plugins/hailo8l.py
+--- a/frigate/detectors/plugins/hailo8l.py
++++ b/frigate/detectors/plugins/hailo8l.py
+@@ -50,6 +50,8 @@ ARCH = None
+ H8_DEFAULT_MODEL = "yolov6n.hef"
+ H8L_DEFAULT_MODEL = "yolov6n.hef"
+ H8_DEFAULT_URL = "https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov6n.hef"
+ H8L_DEFAULT_URL = "https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/yolov6n.hef"
++H10_DEFAULT_MODEL = "yolov6n.hef"
++H10_DEFAULT_URL = "https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo10h/yolov6n.hef"
+ 
+ 
+ def detect_hailo_arch():
+@@ -62,8 +64,10 @@ def detect_hailo_arch():
+             return None
+         for line in result.stdout.split("\n"):
+             if "Device Architecture" in line:
+-                if "HAILO8L" in line:
++                if "HAILO10H" in line or "HAILO10" in line:
++                    return "hailo10h"
++                elif "HAILO8L" in line:
+                     return "hailo8l"
+                 elif "HAILO8" in line:
+                     return "hailo8"
+@@ -289,8 +293,10 @@ class HailoDetector(DetectionApi):
+         elif url and url.endswith(".hef"):
+             return os.path.basename(url)
+         else:
+-            if ARCH == "hailo8":
++            if ARCH == "hailo10h":
++                return H10_DEFAULT_MODEL
++            elif ARCH == "hailo8":
+                 return H8_DEFAULT_MODEL
+             else:
+                 return H8L_DEFAULT_MODEL
+@@ -317,8 +323,10 @@ class HailoDetector(DetectionApi):
+             if os.path.exists(cached_model_path):
+                 logger.debug(f"Model found in cache: {cached_model_path}")
+                 return cached_model_path
+             else:
+                 logger.debug(f"Downloading default model: {model_name}")
+-                if ARCH == "hailo8":
++                if ARCH == "hailo10h":
++                    self.download_model(H10_DEFAULT_URL, cached_model_path)
++                elif ARCH == "hailo8":
+                     self.download_model(H8_DEFAULT_URL, cached_model_path)
+                 else:
+                     self.download_model(H8L_DEFAULT_URL, cached_model_path)
+@@ -411,10 +419,10 @@ class HailoDetector(DetectionApi):
+ 
+ 
+ class HailoDetectorConfig(BaseDetectorConfig):
+-    """Hailo-8/Hailo-8L detector using HEF models and the HailoRT SDK for inference on Hailo hardware."""
++    """Hailo-8/Hailo-8L/Hailo-10H detector using HEF models and the HailoRT SDK for inference on Hailo hardware."""
+ 
+     model_config = ConfigDict(
+-        title="Hailo-8/Hailo-8L",
++        title="Hailo-8/Hailo-8L/Hailo-10H",
+     )

@@ -1,7 +1,9 @@
 name: "Frigate Hailo-10H (Full Access)"
 version: "0.17.0.1"
+breaking_versions:
+  - "0.17.0"
 slug: "frigate-fa-h10"
-description: "NVR with realtime local object detection using Hailo-10H AI accelerator"
+description: "NVR with realtime local object detection for IP cameras (Hailo-10H)"
 url: "https://github.com/mikehailodev/frigate-hass-addons-h10"
 arch:
   - aarch64
@@ -40,7 +42,9 @@ full_access: true
 privileged:
   - PERFMON
   - SYS_RAWIO
-schema: false
+schema:
+  plus_api_key: "password?"
+  go2rtc_allow_arbitrary_exec: "str?"
 services:
   - "mqtt:want"
 map:
