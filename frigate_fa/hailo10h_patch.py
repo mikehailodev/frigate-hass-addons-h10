@@ -103,7 +103,17 @@ NEW_PREPARE = '''\
                     self.download_model(H8L_DEFAULT_URL, cached_model_path)'''
 src = src.replace(OLD_PREPARE, NEW_PREPARE, 1)
 
-# ── 5. Update HailoDetectorConfig docstring ────────────────────────
+# ── 5. Enable shared VDevice for parallel device access ────────────
+#       Required so Frigate + VLM (or other Hailo apps) can share the
+#       Hailo-10H concurrently.  Uses the standard Hailo constant "SHARED".
+OLD_VDEVICE = '''        params = VDevice.create_params()
+        params.scheduling_algorithm = HailoSchedulingAlgorithm.ROUND_ROBIN'''
+NEW_VDEVICE = '''        params = VDevice.create_params()
+        params.scheduling_algorithm = HailoSchedulingAlgorithm.ROUND_ROBIN
+        params.group_id = "SHARED"'''
+src = src.replace(OLD_VDEVICE, NEW_VDEVICE, 1)
+
+# ── 6. Update HailoDetectorConfig docstring ────────────────────────
 src = src.replace(
     "Hailo-8/Hailo-8L detector using HEF models and the HailoRT SDK",
     "Hailo-8/Hailo-8L/Hailo-10H detector using HEF models and the HailoRT SDK",

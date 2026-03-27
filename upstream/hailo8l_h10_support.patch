@@ -2,8 +2,10 @@ From: mikehailodev
 Subject: [PATCH] detectors: hailo8l: Add Hailo-10H support
 
 Add Hailo-10H architecture detection and default model configuration
-to the existing Hailo detector plugin. Since HailoRT 4.x (Hailo-8)
-and HailoRT 5.x (Hailo-10H) cannot coexist, this requires a separate
+to the existing Hailo detector plugin. Enable shared VDevice group so
+multiple Hailo applications (e.g. Frigate + VLM) can run in parallel
+on the same Hailo-10H device. Since HailoRT 4.x (Hailo-8) and
+HailoRT 5.x (Hailo-10H) cannot coexist, this requires a separate
 Docker image variant with HailoRT 5.2.0.
 
 Changes to hailo8l.py:
@@ -11,6 +13,7 @@ Changes to hailo8l.py:
 - Add H10_DEFAULT_MODEL and H10_DEFAULT_URL constants
 - extract_model_name(): Return H10 default model when arch is hailo10h
 - check_and_prepare(): Download H10 default model when arch is hailo10h
+- HailoAsyncInference: Set params.group_id = "SHARED" for parallel use
 - Update HailoDetectorConfig docstring and title
 
 No changes to the detector key ("hailo8l") or user-facing config syntax.
@@ -25,8 +28,8 @@ The detector auto-detects whether the hardware is Hailo-8, Hailo-8L,
 or Hailo-10H and selects the appropriate default model.
 
 ---
- frigate/detectors/plugins/hailo8l.py | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ frigate/detectors/plugins/hailo8l.py | 23 +++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
 diff --git a/frigate/detectors/plugins/hailo8l.py b/frigate/detectors/plugins/hailo8l.py
 --- a/frigate/detectors/plugins/hailo8l.py
@@ -41,6 +44,14 @@ diff --git a/frigate/detectors/plugins/hailo8l.py b/frigate/detectors/plugins/ha
  
  
  def detect_hailo_arch():
+@@ -90,6 +92,7 @@ class HailoAsyncInference:
+ 
+         params = VDevice.create_params()
+         params.scheduling_algorithm = HailoSchedulingAlgorithm.ROUND_ROBIN
++        params.group_id = "SHARED"
+ 
+         self.hef = HEF(hef_path)
+         self.target = VDevice(params)
 @@ -62,8 +64,10 @@ def detect_hailo_arch():
              return None
          for line in result.stdout.split("\n"):
