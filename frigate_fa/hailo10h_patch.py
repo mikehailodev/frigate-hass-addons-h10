@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Copyright (c) 2026 mikehailodev
+# SPDX-License-Identifier: MIT
+#
+# This script modifies Frigate's hailo8l.py detector plugin (MIT licensed,
+# Copyright Frigate, Inc.) to add Hailo-10H support. See THIRD_PARTY_LICENSES
+# in the repository root for full license details.
 """
 Patch Frigate's hailo8l.py detector plugin to add Hailo-10H support.
 

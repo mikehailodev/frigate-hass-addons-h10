@@ -1,11 +1,13 @@
-# Frigate Hailo-10H Add-ons for Home Assistant
+# Hailo-10H Add-ons for Frigate on Home Assistant
 
-> Frigate NVR with **Hailo-10H** AI accelerator support. This is a temporary
-> fork of the [official Frigate add-ons](https://github.com/blakeblackshear/frigate-hass-addons)
-> that replaces HailoRT 4.x (Hailo-8/8L) with HailoRT 5.2.0 (Hailo-10H).
+> **Community project — not affiliated with or endorsed by [Frigate, Inc.](https://frigate.video) or [Home Assistant](https://www.home-assistant.io).**
 >
-> Once Hailo-8 and Hailo-10H co-existence is supported upstream, this fork
-> will be retired in favor of the official repository.
+> Hailo-10H AI accelerator support for Frigate NVR, packaged as a
+> Home Assistant add-on. Based on the official [Frigate Docker image](https://github.com/blakeblackshear/frigate)
+> (MIT licensed) with HailoRT 4.x replaced by HailoRT 5.2.0 for Hailo-10H.
+>
+> Once Hailo-8 and Hailo-10H co-existence is supported upstream, this project
+> will be retired in favor of the official Frigate repository.
 
 ## Installing
 
@@ -20,7 +22,7 @@ https://github.com/mikehailodev/frigate-hass-addons-h10
 
 ## Add-ons provided by this repository
 
-- **[Frigate (Full Access) — Hailo-10H](frigate_fa/)** — NVR with realtime object detection using Hailo-10H
+- **[Hailo-10H for Frigate (Full Access)](frigate_fa/)** — Realtime object detection using Hailo-10H
 
 ## What's different from the official Frigate add-on?
 

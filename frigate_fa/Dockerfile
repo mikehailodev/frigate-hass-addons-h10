@@ -1,5 +1,6 @@
-# Frigate with Hailo-10H support
-# Based on official Frigate image, replaces HailoRT 4.x with 5.2.0
+# Hailo-10H for Frigate
+# Based on official Frigate Docker image (MIT licensed, Copyright Frigate, Inc.)
+# Replaces HailoRT 4.x with 5.2.0 for Hailo-10H support
 ARG BUILD_FROM=ghcr.io/blakeblackshear/frigate:0.17.0
 FROM ${BUILD_FROM}
 
@@ -38,4 +39,8 @@ LABEL \
     io.hass.description="${BUILD_DESCRIPTION}" \
     io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
-    io.hass.version=${BUILD_VERSION}
+    io.hass.version=${BUILD_VERSION} \
+    org.opencontainers.image.title="Hailo-10H for Frigate" \
+    org.opencontainers.image.description="Hailo-10H AI accelerator support for Frigate NVR" \
+    org.opencontainers.image.licenses="MIT" \
+    org.opencontainers.image.source="https://github.com/mikehailodev/frigate-hass-addons-h10"

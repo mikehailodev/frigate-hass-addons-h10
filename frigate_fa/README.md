@@ -1,11 +1,11 @@
-# Home Assistant Add-on: Frigate (Full Access) — Hailo-10H
+# Home Assistant Add-on: Hailo-10H for Frigate (Full Access)
 
 ![Supports aarch64 Architecture][aarch64-shield]
 
-NVR with realtime local object detection using **Hailo-10H** AI accelerator.
+Hailo-10H AI accelerator support for Frigate NVR — realtime local object detection for IP cameras.
 
-This is a patched version of the official Frigate add-on that replaces
-HailoRT 4.x with HailoRT 5.2.0 for Hailo-10H support.
+This is a community add-on based on the official [Frigate](https://frigate.video) Docker image (MIT licensed).
+It replaces HailoRT 4.x with HailoRT 5.2.0 for Hailo-10H support. Not affiliated with or endorsed by Frigate, Inc.
 
 You must create a config file as `config.yml` in your add-on configuration folder.
 

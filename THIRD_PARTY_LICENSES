@@ -1,0 +1,65 @@
+Third-Party Licenses
+====================
+
+This project uses the following third-party software:
+
+
+1. Frigate NVR / frigate-hass-addons
+------------------------------------
+License: MIT
+Copyright (c) 2026 Frigate, Inc.
+Copyright (c) 2020 Blake Blackshear
+
+Source: https://github.com/blakeblackshear/frigate
+        https://github.com/blakeblackshear/frigate-hass-addons
+
+This add-on uses the official Frigate Docker image
+(ghcr.io/blakeblackshear/frigate) as a base and applies runtime modifications
+to the Hailo detector plugin for Hailo-10H compatibility.
+
+"Frigate" is a trademark of Frigate, Inc. This project is not affiliated with
+or endorsed by Frigate, Inc.
+
+Full MIT license text:
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+
+2. HailoRT SDK
+---------------
+License: Hailo EULA (proprietary)
+Copyright (c) Hailo Technologies Ltd.
+
+Source: https://hailo.ai/developer-zone/
+
+The HailoRT runtime library (hailort) and associated packages included in
+this project are proprietary software of Hailo Technologies Ltd. Use of these
+components is subject to Hailo's End User License Agreement.
+
+See: https://hailo.ai/developer-zone/sw-downloads/
+
+
+3. Home Assistant
+-----------------
+License: Apache 2.0
+Copyright (c) Home Assistant contributors
+
+This add-on is designed to run on the Home Assistant platform. "Home Assistant"
+is a trademark of the Open Home Foundation. This project is not affiliated with
+or endorsed by Home Assistant or the Open Home Foundation.
