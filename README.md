@@ -26,7 +26,7 @@ https://github.com/mikehailodev/frigate-hass-addons-h10
 
 ## What's different from the official Frigate add-on?
 
-| | Official Frigate | This fork |
+| | Official Frigate | This add-on |
 |---|---|---|
 | **HailoRT** | 4.21.0 | 5.2.0 |
 | **Hailo hardware** | Hailo-8, Hailo-8L | Hailo-10H |
@@ -41,7 +41,7 @@ appropriate model.
 ## Prerequisites
 
 - **HAOS** built with `hailo10h-pci` driver and `hailo10h-firmware`
-  ([operating-system fork](https://github.com/mikehailodev/operating-system),
+  ([operating-system build](https://github.com/mikehailodev/operating-system),
   branch `feature/hailort-package`)
 - **Raspberry Pi 5** with Hailo-10H AI HAT+
 - Disable **Protection Mode** on the add-on (required for `/dev/hailo0` access)
@@ -51,22 +51,22 @@ appropriate model.
 ```yaml
 mqtt:
   enabled: true
-  host: <your-mqtt-broker>
-  user: <user>
-  password: <password>
+  host: <home assistant url>
+  user: user_name
+  password: pass
 
 cameras:
-  my_camera:
+  Camera_1:
     enabled: true
     ffmpeg:
       inputs:
-        - path: <rtsp-url>
+        - path: rtsp://<path>
           roles:
             - detect
             - record
 
 detectors:
-  hailo:
+  hailo8l:
     type: hailo8l
     device: PCIe
 
@@ -77,12 +77,43 @@ model:
   input_pixel_format: rgb
   input_dtype: int
   model_type: yolo-generic
+  labelmap_path: /labelmap/coco-80.txt
+  path:
+    https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/yolov8m.hef
 
 detect:
   enabled: true
-  width: 1280
-  height: 720
   fps: 5
+
+objects:
+  track:
+    - person
+
+record:
+  enabled: true
+  detections:
+    pre_capture: 5
+    post_capture: 5
+    retain:
+      days: 1
+      mode: active_objects
+
+snapshots:
+  enabled: true
+  timestamp: true
+  bounding_box: true
+  crop: false
+  retain:
+    default: 1
+    objects:
+      person: 1
+
+logger:
+  default: info
+  logs:
+    frigate.object_detection: debug
+    frigate.motion: debug
+    frigate.detectors.plugins.hailo8l: debug
 
 version: 0.17-0
 ```
